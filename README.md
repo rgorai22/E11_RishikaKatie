@@ -1,4 +1,4 @@
-# E11_RishikaKatie
+# E11_RishikaKatieVic
 
 This is the repository for E11 Lab
 Group Members are:
