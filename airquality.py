@@ -14,10 +14,10 @@ import csv
 from digitalio import DigitalInOut, Direction, Pull
 #from adafruit_pm25.i2c import PM25_I2C
 
-meta_data = ["Time", "PM25", "PM10"]
+meta_data = ["Time", "PM25", "PM10", "PM100"]
 file = open("air_quality_data.csv", "w", newline='')
 data_writer = csv.writer(file)
-data_writer.row(meta_data)
+data_writer.writerrow(meta_data)
 
 reset_pin = None
 # If you have a GPIO, its not a bad idea to connect it to the RESET pin
@@ -66,9 +66,8 @@ while now < 45:
         print("Unable to read from sensor, retrying...")
         continue
 
-    aqdata = p25.get_data()
-    timestamp = time_time()
-    data = [timestamp.aqdata[0].aqdata[1]]
+    aqdata = pm25.read()
+    data = [now, aqdata["pm25 standard"], aqdata["pm100 standard"]]
     data_writer.writerow(data)
 
     print()
