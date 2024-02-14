@@ -2,6 +2,10 @@ import sys
 import random
 import time
 import csv
+import board
+import busio 
+from digitalio
+import DigitalInOut, Direction, Pull
 
 print(sys.argv)
 
@@ -21,10 +25,6 @@ print(meta_data)
 
 
 # air quality
-import board
-import busio
-from digitalio 
-import DigitalInOut, Direction, Pull
 reset_pin = None
 
 import serial
@@ -81,7 +81,7 @@ while (now - start_time) < run_time:
     "Gas: %d ohm" % bme680.gas,
     "Humidity: %0.1f %%" % bme680.relative_humidity,
     "Pressure: %0.3f hPa" % bme680.pressure,
-    "Altitude = %0.2f meters" % bme680.altitude]
+    "Altitude = %0.2f meters" % bme680.altitude
     print("Weather",data)
 
     time.sleep(1)
