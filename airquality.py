@@ -9,9 +9,14 @@ Example sketch to connect to PM2.5 sensor with either I2C or UART.
 import time
 import board
 import busio
+import csv
 from digitalio import DigitalInOut, Direction, Pull
 #from adafruit_pm25.i2c import PM25_I2C
 
+meta_data = ["Time", "PM25", "PM10", "PM100"]
+file = open("air_quality_data.csv", "w", newline='')
+data_writer = csv.writer(file)
+data_writer.writerow(meta_data)
 
 reset_pin = None
 # If you have a GPIO, its not a bad idea to connect it to the RESET pin
@@ -48,10 +53,11 @@ pm25 = PM25_UART(uart, reset_pin)
 print("Found PM2.5 sensor, reading data...")
 
 start = time.time()
-now = 0
-while now < 45:
+run = 30
+now = start
+while now < start + run:
 
-    now = time.time() - start
+    now = time.time()
 
     try:
         aqdata = pm25.read()
@@ -60,8 +66,12 @@ while now < 45:
         print("Unable to read from sensor, retrying...")
         continue
 
+    data = [now, aqdata["pm25 standard"], aqdata["pm100 standard"]]
+    data_writer.writerow(data)
+
     print()
     print("Concentration Units (standard)")
+    print(time.time())
     print("---------------------------------------")
     print(
         "PM 1.0: %d\tPM2.5: %d\tPM10: %d"
