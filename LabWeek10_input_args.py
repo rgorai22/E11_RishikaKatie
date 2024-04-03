@@ -14,14 +14,14 @@ dwriter = csv.writer(ifile)
 metadata = ['Count', 'Time']
 
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(31, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(11, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 def count_pulse(channel):
     global count
     count += 1
     #print("Count detected at:", time.strftime('%Y-%m-%d %H:%M:%S'))
 
-GPIO.add_event_detect(31, GPIO.FALLING, callback=count_pulse)
+GPIO.add_event_detect(11, GPIO.FALLING, callback=count_pulse)
 
 count = 0
 
